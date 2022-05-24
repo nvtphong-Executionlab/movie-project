@@ -1,1 +1,1 @@
-const apiKey =
+const String apiKey = 'e28d524f79c261dea1ad8d59e0caa607';
