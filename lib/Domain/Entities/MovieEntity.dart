@@ -1,4 +1,6 @@
-class MovieEntity {
+import 'package:movie_project/Domain/Entities/Entity.dart';
+
+class MovieEntity implements Entity {
   String? id;
   String? title;
   String? overview;

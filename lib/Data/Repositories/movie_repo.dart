@@ -1,11 +1,13 @@
 
 
 import 'package:movie_project/Core/connection_info.dart';
-import 'package:movie_project/Data/data_source/movie_data_source.dart';
-import 'package:movie_project/Domain/Entities/MovieEntity.dart';
 import 'package:movie_project/Domain/Respositoties/movie_repo_interface.dart';
 
-class MovieRepository implements MovieRepositoryInterface {
+import '../../Domain/Entities/ListEntity.dart';
+import '../data_source/movie_local_data_source.dart';
+import '../data_source/movie_remote_data_source.dart';
+
+class MovieRepository implements RepositoryInterface {
   final MovieLocalDataSource movieLocalDataSource;
   final MovieRemoteDataSource movieRemoteDataSource;
   final ConnectionInfo connectionInfo;
@@ -13,12 +15,12 @@ class MovieRepository implements MovieRepositoryInterface {
   MovieRepository(this.movieLocalDataSource, this.movieRemoteDataSource, this.connectionInfo);
 
   @override
-  Future<MovieEntity> getMovies() async{
+  Future<ListEntity> getMovies(String apiLink) async{
     if(await connectionInfo.isConnected){
-      final remoteMovies = await movieRemoteDataSource.getMovies();
-      movieLocalDataSource.cacheMovies(remoteMovies);
+      final remoteMovies = await movieRemoteDataSource.getMovies(apiLink);
+      movieLocalDataSource.cacheMovies(apiLink, remoteMovies);
       return remoteMovies;
     }
-    return movieLocalDataSource.getMovies();
+    return movieLocalDataSource.getMovies(apiLink);
   }
 }

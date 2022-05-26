@@ -1,5 +1,6 @@
-import '../Entities/MovieEntity.dart';
+import '../Entities/ListEntity.dart';
 
-abstract class MovieRepositoryInterface {
-  Future<MovieEntity> getMovies();
+
+abstract class RepositoryInterface {
+  Future<ListEntity> getMovies(String apiLink);
 }
