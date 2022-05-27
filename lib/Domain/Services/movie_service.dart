@@ -9,7 +9,17 @@ class MovieService extends Service
   MovieService(this.repositoryInterface);
 
   @override
-  Future<ListEntity> call(dynamic params) async {
+  Future<ListEntity> callMovies(dynamic params) async {
     return await repositoryInterface.getMovies(params);
+  }
+  @override
+  Future callCasts(params) async {
+    return await repositoryInterface.getCasts(params);
+  }
+
+  @override
+  Future callCareer(params) async {
+    // TODO: implement callCareer
+    return await repositoryInterface.getCareer(params);
   }
 }

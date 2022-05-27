@@ -25,7 +25,7 @@ class MovieCard extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20)
               ),
-              child: Image.network('https://image.tmdb.org/t/p/w500/${movieEntity.poster}',height: 100,),
+              child: Image.network('https://image.tmdb.org/t/p/w500/${movieEntity.posterPath}',height: 100,),
             ),
             SizedBox(height: 20,),
             Text('${movieEntity.title}')

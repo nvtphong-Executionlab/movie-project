@@ -1,12 +1,33 @@
 import 'package:movie_project/Domain/Entities/Entity.dart';
 
 class MovieEntity implements Entity {
-  String? id;
-  String? title;
+  bool? adult;
+  String? backdropPath;
+  List<int>? genreIds;
+  int? id;
+  String? originalLanguage;
+  String? originalTitle;
   String? overview;
-  String? poster;
-  String? voteAvg;
-  String? popularity;
-  String? backdrop;
-  MovieEntity({this.id, this.title, this.overview, this.poster, this.popularity, this.voteAvg, this.backdrop});
+  String? posterPath;
+  String? releaseDate;
+  String? title;
+  bool? video;
+  double? voteAverage;
+  int? voteCount;
+  double? popularity;
+  MovieEntity({
+    this.adult,
+    this.backdropPath,
+    this.genreIds,
+    this.id,
+    this.originalLanguage,
+    this.originalTitle,
+    this.overview,
+    this.posterPath,
+    this.releaseDate,
+    this.title,
+    this.video,
+    this.voteAverage,
+    this.voteCount,
+    this.popularity});
 }

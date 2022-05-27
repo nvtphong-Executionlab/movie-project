@@ -1,33 +1,25 @@
 
-import 'package:dio/dio.dart';
+import 'dart:convert';
+
+import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
 import 'custom_exception.dart';
 
 class ApiProvider {
-  late Dio dio;
-  ApiProvider(){
-    dio = Dio(
-      BaseOptions(
-        validateStatus: (status) {
-          return true;
-        },
-        followRedirects: false,
-        baseUrl: 'https://api.themoviedb.org/3',
-        connectTimeout: 30000,
-        receiveTimeout: 30000
-      )
-    );
-  }
+  static const url = 'https://api.themoviedb.org/3';
+  ApiProvider();
   Future<Map<String, dynamic>> get(String endPoint) async{
     try{
-      final Response response = await dio.get(endPoint);
+      final response = await http.get(Uri.parse(url + endPoint));
       final Map<String, dynamic> responseData = classifyResponse(response);
       return responseData;
-    } on DioError catch(err){
+    }
+    catch(err){
       throw FetchDataException('internal Error');
     }
   }
-  Map<String, dynamic> classifyResponse(Response response){
-    final Map<String, dynamic> responseData = response.data as Map<String, dynamic>;
+  Map<String, dynamic> classifyResponse(response){
+    final Map<String, dynamic> responseData = jsonDecode(response.body);
     switch(response.statusCode){
       case 200:
       case 201:
