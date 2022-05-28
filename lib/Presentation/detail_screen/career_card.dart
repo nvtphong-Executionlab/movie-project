@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_project/Domain/Entities/CastEntity.dart';
 import 'package:movie_project/Domain/Entities/MovieEntity.dart';
-import 'package:movie_project/Presentation/logic_holders/providers/movie_provider.dart';
+import 'package:movie_project/Presentation/logic_holders/providers/providers.dart';
 import 'package:http/http.dart' as http;
 
 import '../splash_screen/splash_screen.dart';
@@ -18,7 +18,7 @@ class CareerCard extends ConsumerWidget {
           List<MovieEntity> movies = data.knowFor;
           return SingleChildScrollView(
             child: Container(
-              height: 320,
+              height: 280,
               child: ListView.builder(
                   itemCount: movies.length,
                   itemBuilder: (context, index) {

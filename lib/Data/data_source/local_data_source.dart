@@ -2,7 +2,11 @@
 import 'package:get_storage/get_storage.dart';
 import 'package:movie_project/Data/Models/CastModel.dart';
 import 'package:movie_project/Data/Models/ListCastModel.dart';
+import 'package:movie_project/Data/Models/ListModel.dart';
 import 'package:movie_project/Data/Models/ListMovieModel.dart';
+import 'package:movie_project/Data/Models/ListReviewModel.dart';
+import 'package:movie_project/Data/Models/ListVideoModel.dart';
+import 'package:movie_project/Data/Models/ReviewerModel.dart';
 import 'data_source.dart';
 
 class LocalDataSource implements DataSource {
@@ -10,7 +14,7 @@ class LocalDataSource implements DataSource {
   LocalDataSource({required this.localStorage});
 
   Future<void> cacheModels(String type_list, cacheMovies) {
-    return localStorage.write(type_list,cacheMovies.toJson());
+    return localStorage.write(type_list, cacheMovies.toJson());
   }
 
   @override
@@ -36,6 +40,33 @@ class LocalDataSource implements DataSource {
     final jsonCasts = localStorage.read(castModel.creditId!);
     if(jsonCasts != null){
       return Future.value(CastModel.fromJson(jsonCasts));
+    }
+    throw "Cache Error";
+  }
+
+  // @override
+  // Future<ListReviewModel> getReviews(String apiLink) {
+  //   final jsonCasts = localStorage.read(apiLink);
+  //   if(jsonCasts != null){
+  //     return Future.value(ListReviewModel.fromJson(jsonCasts));
+  //   }
+  //   throw "Cache Error";
+  // }
+
+  // @override
+  // Future<ListVideoModel> getVideos(String apiLink) {
+  //   final jsonCasts = localStorage.read(apiLink);
+  //   if(jsonCasts != null){
+  //     return Future.value(ListVideoModel.fromJson(jsonCasts));
+  //   }
+  //   throw "Cache Error";
+  // }
+
+  @override
+  Future<ListModel> getDataList(ListModel listModel, String apiLink) {
+    final jsonCasts = localStorage.read(apiLink);
+    if(jsonCasts != null){
+      return Future.value(listModel.fromJson(jsonCasts));
     }
     throw "Cache Error";
   }

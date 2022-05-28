@@ -1,7 +1,8 @@
 
+import 'package:movie_project/Data/Models/InterfaceModel.dart';
 import 'package:movie_project/Domain/Entities/MovieEntity.dart';
 
-class MovieModel extends MovieEntity {
+class MovieModel extends MovieEntity implements Model {
   MovieModel.fromJson(dynamic json){
     try{
       adult = json["adult"] ?? false;

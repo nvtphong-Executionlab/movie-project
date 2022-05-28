@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_project/Domain/Entities/MovieEntity.dart';
 import 'package:movie_project/Presentation/detail_screen/actor_card_component.dart';
-import 'package:movie_project/Presentation/logic_holders/providers/movie_provider.dart';
+import 'package:movie_project/Presentation/detail_screen/reviews_screen.dart';
+import 'package:movie_project/Presentation/logic_holders/providers/providers.dart';
+import 'package:movie_project/Presentation/reuse_component/botom_nav.dart';
+import 'package:movie_project/Presentation/trailer_screen/trailer_screen.dart';
 
 import '../splash_screen/splash_screen.dart';
 
@@ -31,6 +34,7 @@ class DetailScreen extends ConsumerWidget {
                   background: Image.network(
                     "https://image.tmdb.org/t/p/w500${movieEntity.backdropPath}",
                     fit: BoxFit.cover,
+
                   ),
                 ),
                 title: Text(movieEntity.title!),
@@ -43,7 +47,7 @@ class DetailScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildDetail(),
+                  buildDetail(context),
                   SizedBox(
                     height: 20,
                   ),
@@ -122,7 +126,7 @@ class DetailScreen extends ConsumerWidget {
     );
   }
 
-  Row buildDetail() {
+  Row buildDetail(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -160,7 +164,14 @@ class DetailScreen extends ConsumerWidget {
                 SizedBox(
                   width: 5,
                 ),
-                Text(movieEntity.voteAverage.toString())
+                Text(movieEntity.voteAverage.toString()),
+                TextButton(
+                  onPressed: () => {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewScreen(movieId: movieEntity.id!)))
+                  },
+                  child: Text('Read reviews'),
+                ),
+
               ],
             ),
             SizedBox(
@@ -174,7 +185,13 @@ class DetailScreen extends ConsumerWidget {
                 SizedBox(
                   width: 5,
                 ),
-                Text(movieEntity.popularity.toString())
+                Text(movieEntity.popularity.toString()),
+                TextButton(
+                    onPressed: () => {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => TrailerScreen(movieId: movieEntity.id!,)))
+                    },
+                    child: Text('Watch trailers')
+                )
               ],
             )
           ],

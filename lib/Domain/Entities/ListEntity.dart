@@ -1,7 +1,6 @@
 
 import 'Entity.dart';
 
-class ListEntity {
+abstract class ListEntity {
   List<Entity>? items;
-  ListEntity([this.items]);
 }

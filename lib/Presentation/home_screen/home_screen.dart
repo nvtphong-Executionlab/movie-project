@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_project/Core/constant.dart';
 import 'package:movie_project/Domain/Entities/MovieEntity.dart';
 import 'package:movie_project/Presentation/home_screen/movie_card_component.dart';
-import 'package:movie_project/Presentation/logic_holders/providers/movie_provider.dart';
+import 'package:movie_project/Presentation/logic_holders/providers/providers.dart';
+import 'package:movie_project/Presentation/reuse_component/botom_nav.dart';
 
 import '../splash_screen/splash_screen.dart';
 
@@ -20,6 +21,7 @@ class HomeScreen extends ConsumerWidget {
           appBar: AppBar(
             title: Center(child: Text('${type_list[curr]} Movies')),
           ),
+          bottomNavigationBar: CustomBottomNavigation(),
           body: Dismissible(
             key: ValueKey(type_list[curr]),
             onDismissed: (DismissDirection direction){

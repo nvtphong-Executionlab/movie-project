@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:movie_project/Core/constant.dart';
-import 'package:movie_project/Presentation/detail_screen/detail_screen.dart';
+
 import 'package:movie_project/Presentation/home_screen/home_screen.dart';
-import 'package:movie_project/Presentation/logic_holders/providers/movie_provider.dart';
 import 'package:movie_project/Presentation/splash_screen/splash_screen.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:movie_project/Presentation/auth_screen/login_screen.dart';
+
+import 'Presentation/logic_holders/providers/utils_provider.dart';
 
 void main() async {
   await GetStorage.init();
@@ -22,6 +22,7 @@ class MyApp extends ConsumerWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     return MaterialApp(
       routes: {
         HomeScreen.route : (context) => HomeScreen(),
@@ -41,7 +42,7 @@ class MyApp extends ConsumerWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-        body: ref.watch(movieProvider(apiLink['trending'])).when(
+        body: ref.watch(allMovieProvider).when(
             data: (data) => LoginScreen(),
             error: (error, trace){
               print(error);

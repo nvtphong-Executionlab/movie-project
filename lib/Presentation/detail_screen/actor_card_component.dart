@@ -25,7 +25,19 @@ class ActorCard extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20)
               ),
-              child: Image.network('https://image.tmdb.org/t/p/w500/${castEntity.profilePath}',height: 100,),
+              child: Image.network(
+                'https://image.tmdb.org/t/p/w500/${castEntity.profilePath}',
+                height: 100,
+                  errorBuilder: (BuildContext context, Object exception,
+                      StackTrace? stackTrace) {
+                    return Image.network(
+                      'https://cdn.tgdd.vn/hoi-dap/580732/loi-404-not-found-la-gi-9-cach-khac-phuc-loi-404-not-3-800x534.jpg',
+                      height: 100,
+                      width: 100,
+
+                    );
+                  }
+              ),
             ),
             SizedBox(height: 20,),
             Text('${castEntity.name}')
