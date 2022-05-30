@@ -23,4 +23,10 @@ class ReviewModel extends ReviewEntity implements Model {
     "updated_at": updatedAt,
     "url": url,
   };
+
+  @override
+  Model fromJson(json) {
+    // TODO: implement fromJson
+    throw UnimplementedError();
+  }
 }

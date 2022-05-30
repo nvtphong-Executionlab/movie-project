@@ -27,4 +27,10 @@ class VideoModel extends VideoEntity implements Model {
     "official": official,
     "id": id,
   };
+
+  @override
+  Model fromJson(json) {
+    // TODO: implement fromJson
+    throw UnimplementedError();
+  }
 }

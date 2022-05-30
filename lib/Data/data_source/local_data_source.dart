@@ -1,6 +1,7 @@
 
 import 'package:get_storage/get_storage.dart';
 import 'package:movie_project/Data/Models/CastModel.dart';
+import 'package:movie_project/Data/Models/InterfaceModel.dart';
 import 'package:movie_project/Data/Models/ListCastModel.dart';
 import 'package:movie_project/Data/Models/ListModel.dart';
 import 'package:movie_project/Data/Models/ListMovieModel.dart';
@@ -44,29 +45,20 @@ class LocalDataSource implements DataSource {
     throw "Cache Error";
   }
 
-  // @override
-  // Future<ListReviewModel> getReviews(String apiLink) {
-  //   final jsonCasts = localStorage.read(apiLink);
-  //   if(jsonCasts != null){
-  //     return Future.value(ListReviewModel.fromJson(jsonCasts));
-  //   }
-  //   throw "Cache Error";
-  // }
-
-  // @override
-  // Future<ListVideoModel> getVideos(String apiLink) {
-  //   final jsonCasts = localStorage.read(apiLink);
-  //   if(jsonCasts != null){
-  //     return Future.value(ListVideoModel.fromJson(jsonCasts));
-  //   }
-  //   throw "Cache Error";
-  // }
-
   @override
   Future<ListModel> getDataList(ListModel listModel, String apiLink) {
     final jsonCasts = localStorage.read(apiLink);
     if(jsonCasts != null){
       return Future.value(listModel.fromJson(jsonCasts));
+    }
+    throw "Cache Error";
+  }
+
+  @override
+  Future<Model> getData(Model model, String apiLink) {
+    final jsonCasts = localStorage.read(apiLink);
+    if(jsonCasts != null){
+      return Future.value(model.fromJson(jsonCasts));
     }
     throw "Cache Error";
   }

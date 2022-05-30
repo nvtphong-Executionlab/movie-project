@@ -15,7 +15,18 @@ class ApiProvider {
       return responseData;
     }
     catch(err){
+      print("err");
       throw FetchDataException('internal Error');
+    }
+  }
+  Future<Map<String, dynamic>> post(String endPoint, dynamic body) async {
+    try{
+      final response = await http.post(Uri.parse(url + endPoint), body: body);
+      final Map<String, dynamic> responseData = classifyResponse(response);
+      return responseData;
+    }
+    on CustomException {
+      throw UnauthorisedException("invalid");
     }
   }
   Map<String, dynamic> classifyResponse(response){
@@ -26,7 +37,7 @@ class ApiProvider {
         return responseData;
       case 400:
       case 401:
-        throw UnauthorisedException(responseData['error'].toString());
+        throw UnauthorisedException(responseData["status_message"].toString());
       case 500:
       default:
         throw FetchDataException('Error occured while communication with status code: ${response.statusCode}');

@@ -21,13 +21,6 @@ class ListReviewModel extends ListModel {
     }
     return ListReviewModel(this);
   }
-  // ListReviewModel.fromJson(dynamic json){
-  //   items = <Model>[];
-  //   final List listJson = json['items'] ?? json['results'];
-  //   for(dynamic object in listJson){
-  //     items?.add(ReviewModel.fromJson(object));
-  //   }
-  // }
   @override
   Map<String, dynamic> toJson() => {
     'results' : items?.map((e) => (e as ReviewModel).toJson()).toList()

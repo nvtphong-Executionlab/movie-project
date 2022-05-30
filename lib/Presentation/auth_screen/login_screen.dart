@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:movie_project/Presentation/logic_holders/providers/auth_provider.dart';
 
 import '../home_screen/home_screen.dart';
+import '../splash_screen/splash_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends ConsumerWidget {
   static const route = '/login';
 
   LoginScreen({Key? key}) : super(key: key);
   final nameController = TextEditingController();
   final passController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  String _message = '';
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     Size size = MediaQuery.of(context).size;
+   
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -78,7 +84,20 @@ class LoginScreen extends StatelessWidget {
                 fontSize: 20
               ),),
             ),
-            onPressed: () => Navigator.of(context).pushReplacementNamed(HomeScreen.route,),
+            onPressed: () {
+              //var token = '';
+              ref.read(requestTokenProvider).when(
+                  data: (data){
+                    tokenWithUsernameAndPassword(data, ref, nameController.text, passController.text);
+                  },
+                  error: (error, trace){
+                    print("test");
+                    _message = 'Cannot request token';
+                  },
+                  loading: () => {
+                  }
+              );
+            }
           ),
         ),
         SizedBox(height: 20,),
@@ -102,5 +121,14 @@ class LoginScreen extends StatelessWidget {
         )
       ],
     );
+  }
+  void tokenWithUsernameAndPassword(data, WidgetRef ref, String username, String password){
+    print(data.requestToken);
+    ref.read(tokenWithLogin({
+      "username": username,
+      "password" : password,
+      "request_token": data.requestToken
+    })).maybeWhen(data: (value) => print("success"),loading: (){print('Loading');},orElse: () {print('Err');});
+    print("done");
   }
 }

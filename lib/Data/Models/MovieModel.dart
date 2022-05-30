@@ -39,4 +39,10 @@ class MovieModel extends MovieEntity implements Model {
     "vote_count": voteCount,
     "popularity": popularity
   };
+
+  @override
+  Model fromJson(json) {
+    // TODO: implement fromJson
+    throw UnimplementedError();
+  }
 }

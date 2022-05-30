@@ -22,8 +22,6 @@ class CareerCard extends ConsumerWidget {
               child: ListView.builder(
                   itemCount: movies.length,
                   itemBuilder: (context, index) {
-                    final imgProvider = FutureProvider((ref) => image(
-                        "https://image.tmdb.org/t/p/w500${movies[index].posterPath}"));
                     return Row(
                       children: [
                         Image.network(

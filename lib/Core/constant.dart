@@ -15,3 +15,6 @@ const type_list = [
   'nowplaying',
   'toprate'
 ];
+
+const username = 'patricklagger';
+const password = '31121995';
