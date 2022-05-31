@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:movie_project/Presentation/account_screen/account_screen.dart';
 
 import 'package:movie_project/Presentation/home_screen/home_screen.dart';
 import 'package:movie_project/Presentation/splash_screen/splash_screen.dart';
@@ -26,7 +27,8 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       routes: {
         HomeScreen.route : (context) => HomeScreen(),
-        LoginScreen.route : (context) => LoginScreen()
+        LoginScreen.route : (context) => LoginScreen(),
+        AccountScreen.route : (context) => const AccountScreen()
       },
       title: 'Flutter Demo',
       theme: ThemeData(

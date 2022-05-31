@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_signin_button/button_list.dart';
@@ -5,7 +6,7 @@ import 'package:flutter_signin_button/button_view.dart';
 import 'package:movie_project/Presentation/logic_holders/providers/auth_provider.dart';
 
 import '../home_screen/home_screen.dart';
-import '../splash_screen/splash_screen.dart';
+final messageProvider = StateProvider((ref) => '');
 
 class LoginScreen extends ConsumerWidget {
   static const route = '/login';
@@ -14,12 +15,11 @@ class LoginScreen extends ConsumerWidget {
   final nameController = TextEditingController();
   final passController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  String _message = '';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Size size = MediaQuery.of(context).size;
-   
+    var _message = ref.watch(messageProvider.state).state;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -41,9 +41,9 @@ class LoginScreen extends ConsumerWidget {
             controller: nameController,
             keyboardType: TextInputType.text,
             decoration: const InputDecoration(
-              hintText: 'Email', icon: Icon(Icons.verified_user)
+              hintText: 'Username', icon: Icon(Icons.verified_user)
             ),
-            validator: (text) => text!.isEmpty ? 'Username is required !' : '',
+            validator: (text) => text!.isEmpty ? ref.read(messageProvider.state).state = 'Username is required !' : '',
           ),
           padding: EdgeInsets.symmetric(horizontal: 30),
         ),
@@ -51,14 +51,22 @@ class LoginScreen extends ConsumerWidget {
           child: TextFormField(
             controller: passController,
             keyboardType: TextInputType.text,
+            obscureText: true,
+            autocorrect: false,
+            enableSuggestions: false,
             decoration: const InputDecoration(
                 hintText: 'Password', icon: Icon(Icons.lock)
             ),
-            validator: (text) => text!.isEmpty ? 'Password is required !' : '',
+            validator: (text) => text!.isEmpty ? ref.read(messageProvider.state).state = 'Password is required !' : '',
           ),
           padding: EdgeInsets.symmetric(horizontal: 30),
         ),
-        SizedBox(
+        Text(_message, style: const TextStyle(
+          color: Colors.red,
+          fontStyle: FontStyle.italic
+        ),
+        ),
+        const SizedBox(
           height: 20,
         ),
         Container(
@@ -84,19 +92,10 @@ class LoginScreen extends ConsumerWidget {
                 fontSize: 20
               ),),
             ),
-            onPressed: () {
+            onPressed: () async {
               //var token = '';
-              ref.read(requestTokenProvider).when(
-                  data: (data){
-                    tokenWithUsernameAndPassword(data, ref, nameController.text, passController.text);
-                  },
-                  error: (error, trace){
-                    print("test");
-                    _message = 'Cannot request token';
-                  },
-                  loading: () => {
-                  }
-              );
+              final data = await ref.read(requestTokenProvider.future);
+              tokenWithUsernameAndPassword(data, ref,context, nameController.text, passController.text);
             }
           ),
         ),
@@ -122,13 +121,19 @@ class LoginScreen extends ConsumerWidget {
       ],
     );
   }
-  void tokenWithUsernameAndPassword(data, WidgetRef ref, String username, String password){
-    print(data.requestToken);
-    ref.read(tokenWithLogin({
+  void tokenWithUsernameAndPassword(data, WidgetRef ref, context, String username, String password) async {
+    final result = await ref.read(accountProvider({
       "username": username,
       "password" : password,
       "request_token": data.requestToken
-    })).maybeWhen(data: (value) => print("success"),loading: (){print('Loading');},orElse: () {print('Err');});
-    print("done");
+    }).future).catchError((onError) {
+      return null;
+    });
+    if(result != null){
+      Navigator.pushNamedAndRemoveUntil(context, HomeScreen.route, (route) => false,);
+    }
+    else {
+      ref.read(messageProvider.state).state = 'Incorrect username/password';
+    }
   }
 }

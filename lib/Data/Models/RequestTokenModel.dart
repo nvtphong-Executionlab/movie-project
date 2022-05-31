@@ -18,7 +18,7 @@ class RequestTokenModel extends RequestTokenEntity implements Model {
 
   @override
   Map<String, dynamic> toJson() => {
-    "success": success,
+    "success": success.toString(),
     "expires_at": expiresAt,
     "request_token": requestToken,
   };

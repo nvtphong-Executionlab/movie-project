@@ -23,8 +23,8 @@ class MovieService extends Service
   }
 
   @override
-  Future callData(type, params) async {
-    return await repositoryInterface.getData(type, params);
+  Future callData(type, params, {String sessionId = ''}) async {
+    return await repositoryInterface.getData(type, params, sessionId:  sessionId);
   }
 
   @override

@@ -55,7 +55,7 @@ class LocalDataSource implements DataSource {
   }
 
   @override
-  Future<Model> getData(Model model, String apiLink) {
+  Future<Model> getData(Model model, String apiLink, {String sessionId = ''}) {
     final jsonCasts = localStorage.read(apiLink);
     if(jsonCasts != null){
       return Future.value(model.fromJson(jsonCasts));

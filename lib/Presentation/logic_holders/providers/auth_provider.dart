@@ -1,6 +1,7 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_project/Core/constant.dart';
+import 'package:movie_project/Data/Models/AccountModel.dart';
 import 'package:movie_project/Data/Models/SessionModel.dart';
 import 'package:movie_project/Presentation/logic_holders/providers/service_provider.dart';
 
@@ -11,13 +12,11 @@ final requestTokenProvider = FutureProvider((ref) {
   return service.callData(RequestTokenModel.getInstance(), '/authentication/token/new');
 });
 
-final tokenWithLogin = FutureProvider.family((ref, body){
+final accountProvider = FutureProvider.family((ref, body) async {
   final service =  ref.watch(serviceProvider);
-  return service.postData(RequestTokenModel.getInstance(), '/authentication/token/validate_with_login', body);
-});
-
-final sessionProvider = FutureProvider.family((ref, body) {
-  final service = ref.watch(serviceProvider);
-  return service.postData(SessionModel.getInstance(), '/authentication/session/new', body);
+  final tokenWithLogin = await service.postData(RequestTokenModel.getInstance(), '/authentication/token/validate_with_login', body);
+  final data = await service.postData(SessionModel.getInstance(), '/authentication/session/new', tokenWithLogin.toJson());
+  final account = await service.callData(AccountModel.getInstance(), '/account', sessionId: data.sessionId);
+  return account;
 });
 

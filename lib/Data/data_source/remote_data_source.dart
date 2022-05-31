@@ -1,6 +1,7 @@
 
 import 'package:movie_project/Data/Models/InterfaceModel.dart';
 import 'package:movie_project/Data/Models/ListCastModel.dart';
+import 'package:movie_project/Data/Models/SessionModel.dart';
 
 import '../../Core/api_provider.dart';
 import '../../Core/constant.dart';
@@ -31,16 +32,18 @@ class RemoteDataSource implements DataSource {
 
   @override
   Future<ListModel> getDataList(ListModel listModel, String apiLink) async {
+    final sessionId = SessionModel.getInstance().sessionId;
+    print(sessionId);
     final Map<String, dynamic> jsonResponse =
-        await apiProvider.get('$apiLink?api_key=${apiKey}');
+        await apiProvider.get('$apiLink?api_key=${apiKey}&session_id=$sessionId');
     ListModel data = listModel.fromJson(jsonResponse);
     return data;
   }
 
   @override
-  Future<Model> getData(Model model, String apiLink) async {
+  Future<Model> getData(Model model, String apiLink, {String sessionId = ''}) async {
     final Map<String, dynamic> jsonResponse =
-        await apiProvider.get('$apiLink?api_key=${apiKey}');
+        await apiProvider.get('$apiLink?api_key=$apiKey&session_id=$sessionId');
     Model data = model.fromJson(jsonResponse);
     return data;
   }

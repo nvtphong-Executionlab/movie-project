@@ -4,7 +4,9 @@ import 'package:movie_project/Domain/Entities/SessionEntity.dart';
 import 'InterfaceModel.dart';
 
 class SessionModel extends SessionEntity implements Model {
-  SessionModel.getInstance();
+  SessionModel._internal();
+  static final SessionModel _singleton = SessionModel._internal();
+  factory SessionModel.getInstance() => _singleton;
   SessionModel.fromJson(Map<String, dynamic> json){
     success = json["success"];
     sessionId = json["session_id"];
@@ -12,7 +14,9 @@ class SessionModel extends SessionEntity implements Model {
 
   @override
   Model fromJson(json) {
-    return SessionModel.fromJson(json);
+    success = json["success"];
+    sessionId = json["session_id"];
+    return this;
   }
 
   @override

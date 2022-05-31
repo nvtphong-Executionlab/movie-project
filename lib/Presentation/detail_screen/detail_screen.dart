@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_project/Domain/Entities/MovieEntity.dart';
 import 'package:movie_project/Presentation/detail_screen/actor_card_component.dart';
+import 'package:movie_project/Presentation/detail_screen/image_screen.dart';
 import 'package:movie_project/Presentation/detail_screen/reviews_screen.dart';
 import 'package:movie_project/Presentation/logic_holders/providers/providers.dart';
 import 'package:movie_project/Presentation/reuse_component/botom_nav.dart';
@@ -127,13 +128,22 @@ class DetailScreen extends ConsumerWidget {
   }
 
   Row buildDetail(BuildContext context) {
+    String url = "https://image.tmdb.org/t/p/w500${movieEntity.posterPath}";
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Image.network(
-          "https://image.tmdb.org/t/p/w500${movieEntity.posterPath}",
-          height: 100,
-          width: 100,
+        GestureDetector(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ImageScreen(url: url)));
+          },
+          child: Hero(
+            tag: url,
+            child: Image.network(
+              url,
+              height: 100,
+              width: 100,
+            ),
+          ),
         ),
         SizedBox(
           width: 20,

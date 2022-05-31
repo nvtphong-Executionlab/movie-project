@@ -10,6 +10,6 @@ abstract class RepositoryInterface {
   Future<ListEntity> getCasts(String apiLink);
   Future<Entity> getCareer(CastEntity castEntity);
   Future<ListEntity> getDataList(ListModel listModel, String apiLink);
-  Future<Entity> getData(Model model, String apiLink);
+  Future<Entity> getData(Model model, String apiLink, {String sessionId = ''});
   Future<Model> postData(Model model, String apiLink, dynamic body);
 }
