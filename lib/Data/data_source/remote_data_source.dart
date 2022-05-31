@@ -41,7 +41,9 @@ class RemoteDataSource implements DataSource {
   }
 
   @override
-  Future<Model> getData(Model model, String apiLink, {String sessionId = ''}) async {
+  Future<Model> getData(Model model, String apiLink) async {
+    final sessionId = SessionModel.getInstance().sessionId;
+
     final Map<String, dynamic> jsonResponse =
         await apiProvider.get('$apiLink?api_key=$apiKey&session_id=$sessionId');
     Model data = model.fromJson(jsonResponse);

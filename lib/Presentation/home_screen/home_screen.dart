@@ -16,13 +16,9 @@ class HomeScreen extends ConsumerWidget {
   static const route = '/home';
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var curr = ref.watch(typeProvider.state).state;
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-          appBar: AppBar(
-            title: Center(child: Text('${type_list[curr]} Movies')),
-          ),
           bottomNavigationBar: CustomBottomNavigation(),
           body: TabBarView(
             children: [

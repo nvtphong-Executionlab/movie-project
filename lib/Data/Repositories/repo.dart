@@ -51,9 +51,9 @@ class MovieRepository implements RepositoryInterface {
   }
 
   @override
-  Future<Entity> getData(Model model, String apiLink, {String sessionId = ''}) async {
+  Future<Entity> getData(Model model, String apiLink) async {
     if(await connectionInfo.isConnected){
-      final remoteReviews = await remoteDataSource.getData(model, apiLink, sessionId: sessionId);
+      final remoteReviews = await remoteDataSource.getData(model, apiLink);
       localDataSource.cacheModels(apiLink, model);
       return remoteReviews;
     }

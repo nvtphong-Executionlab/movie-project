@@ -44,13 +44,7 @@ class MyApp extends ConsumerWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-        body: ref.watch(allMovieProvider).when(
-            data: (data) => LoginScreen(),
-            error: (error, trace){
-              print(error);
-              return Center(child: Text(error.toString()));
-            },
-            loading: () => SplashScreen()),
+        body: LoginScreen()
       )
     );
   }

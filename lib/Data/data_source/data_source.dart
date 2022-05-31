@@ -8,7 +8,7 @@ abstract class DataSource {
   Future<CreditModel> getCasts(String apiLink);
   Future<CastModel> getCareer(CastModel castModel);
   Future<ListModel> getDataList(ListModel listModel, String apiLink);
-  Future<Model> getData(Model model, String apiLink , {String sessionId = ''});
+  Future<Model> getData(Model model, String apiLink);
 }
 
 
